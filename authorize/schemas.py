@@ -317,7 +317,7 @@ class TransactionBaseSchema(colander.MappingSchema):
     duty = AmountItemSchema(missing=colander.drop)
     shipping_and_handling = AmountItemSchema(missing=colander.drop)
     amount = colander.SchemaNode(colander.Decimal('0.01'),
-                                 validator=colander.Range(0, 20000),
+                                 validator=colander.Range(min=0),
                                  required=True)
     currency_code = colander.SchemaNode(colander.String(),
                                         missing=colander.drop)
@@ -378,13 +378,13 @@ class AIMTransactionSchema(TransactionBaseSchema):
 
 class CreditTransactionSchema(CIMBaseSchema):
     amount = colander.SchemaNode(colander.Decimal('0.01'),
-                                 validator=colander.Range(0, 20000),
+                                 validator=colander.Range(min=0),
                                  required=True)
 
 
 class RefundTransactionSchema(colander.MappingSchema):
     amount = colander.SchemaNode(colander.Decimal('0.01'),
-                                 validator=colander.Range(0, 20000),
+                                 validator=colander.Range(min=0),
                                  required=True)
     transaction_id = colander.SchemaNode(colander.String(),
                                          validator=colander.Length(max=60),
@@ -441,7 +441,7 @@ class CreateRecurringSchema(UpdateRecurringSchema):
                                             validator=colander.Range(1, 9999),
                                             missing=9999)
     amount = colander.SchemaNode(colander.Decimal('0.01'),
-                                 validator=colander.Range(0, 20000),
+                                 validator=colander.Range(min=0),
                                  required=True)
 
 
